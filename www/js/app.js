@@ -3,7 +3,7 @@ var ChatRoom = React.createClass({displayName: 'ChatRoom',
 	render : function () {
 		console.log("ChatRoom");
 		return (
-			React.DOM.h1(null, "Chat Room")
+			React.DOM.h1(null, this.props.title)
 			);
 	}
 })
@@ -14,9 +14,8 @@ window.onload = function(){
   
   var socket = io();
   
-  socket.on('stateChanged', function(data){    
-    console.log("App: State Changed");
-    React.renderComponent(ChatRoom(null), document.getElementById('ChatRoom'))
+  socket.on('newClient', function(data){    
+    React.renderComponent(ChatRoom({title: data.title}), document.getElementById('ChatRoom'))
   });
      
   window.emit = function(event, data){

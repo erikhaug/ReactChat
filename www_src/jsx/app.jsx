@@ -4,9 +4,8 @@ window.onload = function(){
   
   var socket = io();
   
-  socket.on('stateChanged', function(data){    
-    console.log("App: State Changed");
-    React.renderComponent(<ChatRoom />, document.getElementById('ChatRoom'))
+  socket.on('newClient', function(data){    
+    React.renderComponent(<ChatRoom title={data.title}/>, document.getElementById('ChatRoom'))
   });
      
   window.emit = function(event, data){
