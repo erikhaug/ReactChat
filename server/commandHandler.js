@@ -1,6 +1,12 @@
 module.exports = function(on, events){
-	on('sendStateToClient', function(socket){
-		console.log('Command dispatcher');
-   		events.emit('stateChanged', socket);
+	var messages = [];
+	on('sendChatRoomState', function(client){
+    	events.emit('newMessageHasBeenPosted', messages);
+  	});
+
+	on('publishMessage', function(message){
+    	console.log(message);
+    	messages.push(message);
+    	events.emit('newMessageHasBeenPosted', messages);
   });
 }

@@ -1,0 +1,55 @@
+body {
+	padding-top: 0;
+}
+
+.page-header {
+	width: 100%;
+	margin: 0;
+	height: 100px;
+	padding: 10px 30px 10px 30px;
+	background-color: #666;
+}
+
+.page-header h1{	
+	color: #eee;
+}
+
+.ChatForm {
+	padding: 15px;
+	max-width: 600px;
+}
+
+.MessageBoard {
+	overflow:auto;
+	overflow-x:hidden;
+    overflow-y:visible;
+	background-color: #eee;
+	height:500px;
+	padding: 10px 30px 10px 30px;
+}
+
+.MessageRow {
+	max-width: 600px;
+	display: block;
+	padding: 5px;
+}
+
+.MessageRow span{
+}
+
+.MessageRow .author{
+	font-weight: bold;
+	padding-left: 20px;
+}
+
+.MessageRow .text{
+	min-width: 300px;
+	display: block;
+	padding: 15px;
+	border: 2px solid #eee;
+	border-radius: 25px;
+	background-color: #fff;
+
+}
+
+
