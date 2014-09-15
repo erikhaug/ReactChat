@@ -65,15 +65,15 @@ var MessageBoard = React.createClass({displayName: 'MessageBoard',
 })
 /** @jsx React.DOM */
 var MessageRow = React.createClass({displayName: 'MessageRow',
-	render : function () {
-		return (
-			React.DOM.div({className: "MessageRow"}, 
-				React.DOM.span({className: "author"}, this.props.message.name, " "), 
-				React.DOM.span({className: "text"}, "  ", React.DOM.p(null, this.props.message.text))
-			)
-		
-			);
-	}
+  render : function () {
+    return (
+      React.DOM.div({className: "MessageRow"}, 
+        React.DOM.span({className: "author"}, this.props.message.name), 
+        React.DOM.p({className: "message"}, this.props.message.text), 
+        PrettyTime({className: "timestamp", value: this.props.message.timestamp})
+      )
+    );
+  }
 })
 /** @jsx React.DOM */
 var NameForm = React.createClass({displayName: 'NameForm',
@@ -98,6 +98,28 @@ var NameForm = React.createClass({displayName: 'NameForm',
         	);
     }
 });
+/** @jsx React.DOM */
+var PrettyTime = React.createClass({displayName: 'PrettyTime',
+  ticker: null,
+  componentDidMount: function() {
+    return this.ticker = setInterval(function(){
+      this.forceUpdate()
+    }.bind(this), 3000);
+  },
+  componentWillUnmount: function() {
+    if (this.ticker) {
+      return clearInterval(this.ticker);
+    }
+  },
+  render : function () {
+    var value = moment(this.props.value);
+    var prettyTime = value.fromNow();
+    var uglyTime = value.format('LLLL');
+    return (
+      React.DOM.time({title: uglyTime}, prettyTime)
+    );
+  }
+})
 /** @jsx React.DOM */
 window.emit = null;
 

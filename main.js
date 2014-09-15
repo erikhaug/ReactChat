@@ -17,6 +17,7 @@ server.listen(1337);
 
 io.on('connection', function (socket) {
   socket.on('publishMessage', function(message){
+    message.timestamp = new Date();
     messages.push(message);
     io.emit('newMessages', messages);
   });
