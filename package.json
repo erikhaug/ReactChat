@@ -14,14 +14,12 @@
   "author": "Erik Haug",
   "license": "ISC",
   "dependencies": {
-    "events": "^1.0.2",
     "express": "^4.9.0",
     "gulp": "^3.8.8",
     "gulp-concat": "^2.4.0",
     "gulp-react": "^1.0.1",
     "q": "^1.0.1",
     "socket.io": "^1.1.0",
-    "command-dispatcher": "0.0.1",
     "gulp-plumber": "~0.6.5",
     "moment": "~2.8.3"
   },
