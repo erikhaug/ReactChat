@@ -1,6 +1,6 @@
 {
   "name": "ReactChat",
-  "version": "0.0.0",
+  "version": "0.0.0-2",
   "description": "The chat that reacts",
   "main": "main.js",
   "scripts": {
@@ -25,8 +25,8 @@
     "gulp-plumber": "~0.6.5",
     "moment": "~2.8.3"
   },
-  "subdomain": "erikhaug-ReactChat",
   "engines": {
     "node": "0.10.x"
-  }
+  },
+  "subdomain": "erikhaug-ReactChat"
 }

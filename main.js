@@ -23,19 +23,21 @@ io.on('connection', function (socket) {
       users.push(user.name);
       thisUser = user;
       socket.emit('userAllowedAccess', user);
-      io.emit('newUserAdded', users);
+      socket.join('ChatRoom');
+      io.to('ChatRoom').emit('newUserAdded', users);
       socket.emit('newMessages', messages);
+      
     }
   });
 
   socket.on('publishMessage', function(message){
     message.timestamp = new Date();
     messages.push(message);
-    io.emit('newMessages', messages);
+    io.to('ChatRoom').emit('newMessages', messages);
   });
 
   socket.on('disconnect', function(message){
     users.splice(users.indexOf(thisUser), 1);
-    io.emit('newUserAdded', users);
+    io.to('ChatRoom').emit('newUserAdded', users);
   });
 });
