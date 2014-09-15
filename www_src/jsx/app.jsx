@@ -7,9 +7,9 @@ window.onload = function(){
   React.renderComponent(<Header title="React Chat"/>, document.getElementById('Header'))
   React.renderComponent(<NameForm/>, document.getElementById('NameForm'))
   
-  socket.on('userAllowedAccess', function(data){ 
+  socket.on('userAllowedAccess', function(user){ 
     React.unmountComponentAtNode(document.getElementById('NameForm'));
-    React.renderComponent(<ChatForm />, document.getElementById('ChatForm'))
+    React.renderComponent(<ChatForm author={user.name}/>, document.getElementById('ChatForm'))
   });
 
   socket.on('newUserAdded', function(data){      

@@ -2,9 +2,9 @@
 var ChatForm = React.createClass({displayName: 'ChatForm',
 	submit : function  (e) {
 		e.preventDefault();
-	    var author = this.refs.author.getDOMNode().value.trim();
+	    var author = this.props.author;
 	    var message = this.refs.message.getDOMNode().value.trim();    
-	    if (!message || !author) {
+	    if (!message) {
 	      return;
 	    }
 	    emit('publishMessage', {name : author, text : message});
@@ -14,12 +14,6 @@ var ChatForm = React.createClass({displayName: 'ChatForm',
 		return (
 			React.DOM.div({className: "ChatForm"}, 
 				React.DOM.form({className: "form-horizontal ", role: "form"}, 
-				  React.DOM.div({className: "form-group"}, 
-				    React.DOM.label({htmlFor: "inputName", className: "col-sm-2 control-label"}, "Name"), 
-				    React.DOM.div({className: "col-sm-4"}, 
-						React.DOM.input({id: "inputName", type: "text", placeholder: "Your name", className: "form-control", ref: "author"})
-				    )
-				  ), 
 				  React.DOM.div({className: "form-group"}, 
 				    React.DOM.label({htmlFor: "inputMessage", className: "col-sm-2 control-label"}, "Message"), 
 				    React.DOM.div({className: "col-sm-10"}, 
@@ -111,9 +105,9 @@ window.onload = function(){
   React.renderComponent(Header({title: "React Chat"}), document.getElementById('Header'))
   React.renderComponent(NameForm(null), document.getElementById('NameForm'))
   
-  socket.on('userAllowedAccess', function(data){ 
+  socket.on('userAllowedAccess', function(user){ 
     React.unmountComponentAtNode(document.getElementById('NameForm'));
-    React.renderComponent(ChatForm(null), document.getElementById('ChatForm'))
+    React.renderComponent(ChatForm({author: user.name}), document.getElementById('ChatForm'))
   });
 
   socket.on('newUserAdded', function(data){      
