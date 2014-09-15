@@ -9,11 +9,13 @@ var NameForm = React.createClass({
   },
   render: function() {
     return (
-      <div className="col-sm-4 NameForm">
-        <form className="form-inline">
-          <div className="form-group">
+      <div className="jumbotron">
+        <form className="form">
+          <div className="input-group">
             <input  type="text" placeholder="Your name" className="form-control" ref="author" autoFocus></input>
-            <button onClick={this.submit} className="btn btn-success pull-right">Start</button>
+            <span className="input-group-btn">
+              <button onClick={this.submit} className="btn btn-success">Start</button>
+            </span>
           </div>
         </form>
       </div>

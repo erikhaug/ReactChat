@@ -3,22 +3,24 @@ window.emit = null;
 window.onload = function(){ 
   
   var socket = io();
+  
+  var messages = [];
+  var me = {};
 
   React.renderComponent(<Header title="React Chat"/>, document.getElementById('Header'))
   React.renderComponent(<NameForm/>, document.getElementById('NameForm'))
   
-  socket.on('userAllowedAccess', function(user){ 
+  socket.on('userAllowedAccess', function(user){
+    me = user;
     React.unmountComponentAtNode(document.getElementById('NameForm'));
-    React.renderComponent(<ChatForm author={user.name}/>, document.getElementById('ChatForm'))
   });
 
-  socket.on('newUserAdded', function(data){ 
-    console.log(" Users : ",data);
+  socket.on('newUserAdded', function(data){
     React.renderComponent(<UserPanel allUsers={data}/>, document.getElementById('Users'))     
   });
 
   socket.on('newMessages', function(data){    
-    React.renderComponent(<MessageBoard messages={data}/>, document.getElementById('MessageBoard'))
+    React.renderComponent(<MessageBoard messages={data} author={me.name}/>, document.getElementById('MessageBoard'))
   });
      
   window.emit = function(event, data){

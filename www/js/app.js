@@ -13,12 +13,10 @@ var ChatForm = React.createClass({displayName: 'ChatForm',
   render : function () {
     return (
       React.DOM.form({className: "form"}, 
-        React.DOM.div({className: "form-group"}, 
-          React.DOM.div({className: "input-group"}, 
-            React.DOM.input({type: "text", className: "form-control", placeholder: "Your message", ref: "message", autoFocus: true}), 
-            React.DOM.span({className: "input-group-btn"}, 
-              React.DOM.button({className: "btn btn-success", onClick: this.submit, type: "submit"}, "Send")
-            )
+        React.DOM.div({className: "input-group"}, 
+          React.DOM.input({type: "text", className: "form-control", placeholder: "Your message", ref: "message", autoFocus: true}), 
+          React.DOM.span({className: "input-group-btn"}, 
+            React.DOM.button({className: "btn btn-success", onClick: this.submit, type: "submit"}, "Send")
           )
         )
       )
@@ -37,6 +35,22 @@ var Header = React.createClass({displayName: 'Header',
 })
 /** @jsx React.DOM */
 var MessageBoard = React.createClass({displayName: 'MessageBoard',
+  render : function () {
+    return (
+      React.DOM.div({className: "panel panel-default"}, 
+        React.DOM.div({className: "panel-heading"}, 
+          "Meldinger"
+        ), 
+        MessageList({messages: this.props.messages}), 
+        React.DOM.div({className: "panel-footer"}, 
+          ChatForm({author: this.props.author})
+        )
+      )
+    );
+  }
+})
+/** @jsx React.DOM */
+var MessageList = React.createClass({displayName: 'MessageList',
   componentDidUpdate: function(){
     this.scrollToBottom();
   },
@@ -84,11 +98,13 @@ var NameForm = React.createClass({displayName: 'NameForm',
   },
   render: function() {
     return (
-      React.DOM.div({className: "col-sm-4 NameForm"}, 
-        React.DOM.form({className: "form-inline"}, 
-          React.DOM.div({className: "form-group"}, 
+      React.DOM.div({className: "jumbotron"}, 
+        React.DOM.form({className: "form"}, 
+          React.DOM.div({className: "input-group"}, 
             React.DOM.input({type: "text", placeholder: "Your name", className: "form-control", ref: "author", autoFocus: true}), 
-            React.DOM.button({onClick: this.submit, className: "btn btn-success pull-right"}, "Start")
+            React.DOM.span({className: "input-group-btn"}, 
+              React.DOM.button({onClick: this.submit, className: "btn btn-success"}, "Start")
+            )
           )
         )
       )
@@ -122,9 +138,17 @@ var UserPanel = React.createClass({displayName: 'UserPanel',
     
   render: function() {
     return (
-      React.DOM.ul({className: "list-group"}, 
-        this.props.allUsers.map(function(user)   
-          {return React.DOM.li({className: "list-group-item"}, user);}
+      React.DOM.div({className: "panel panel-default"}, 
+        React.DOM.div({className: "panel-heading"}, 
+          "Brukere"
+        ), 
+        React.DOM.ul({className: "list-group"}, 
+          this.props.allUsers.map(function(user)   
+            {return React.DOM.li({className: "list-group-item"}, user);}
+          )
+        ), 
+        React.DOM.div({className: "panel-footer"}, 
+          " "
         )
       )
     );
@@ -136,22 +160,24 @@ window.emit = null;
 window.onload = function(){ 
   
   var socket = io();
+  
+  var messages = [];
+  var me = {};
 
   React.renderComponent(Header({title: "React Chat"}), document.getElementById('Header'))
   React.renderComponent(NameForm(null), document.getElementById('NameForm'))
   
-  socket.on('userAllowedAccess', function(user){ 
+  socket.on('userAllowedAccess', function(user){
+    me = user;
     React.unmountComponentAtNode(document.getElementById('NameForm'));
-    React.renderComponent(ChatForm({author: user.name}), document.getElementById('ChatForm'))
   });
 
-  socket.on('newUserAdded', function(data){ 
-    console.log(" Users : ",data);
+  socket.on('newUserAdded', function(data){
     React.renderComponent(UserPanel({allUsers: data}), document.getElementById('Users'))     
   });
 
   socket.on('newMessages', function(data){    
-    React.renderComponent(MessageBoard({messages: data}), document.getElementById('MessageBoard'))
+    React.renderComponent(MessageBoard({messages: data, author: me.name}), document.getElementById('MessageBoard'))
   });
      
   window.emit = function(event, data){

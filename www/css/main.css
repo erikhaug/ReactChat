@@ -1,61 +1,12 @@
 
-.page-header {
-	width: 100%;
-	margin: 0;
-	height: 100px;
-	padding: 10px 30px 10px 30px;
-	border-bottom: 0px solid #eee;
-}
 
-.page-header h1{	
-	color: #FD8E00;
-
-}
-
-#Users {
+#MessageBoard .list-group,
+#Users .list-group{
 	overflow-x:hidden;
     overflow-y:auto;
 	height:500px;
 }
 
-.UserPanel .username {
-	font-size: 20px;
-	display: block;
-	color: hsl(199, 43%, 48%);
-}
-.NameForm {
-	padding-left: 30px;
-}
-
-.NameForm button{
-	margin-left: 5px;
-}
-
-#MessageBoard .list-group{
-	overflow-x:hidden;
-    overflow-y:auto;
-	height:500px;
-}
-
-.MessageRow {
-	width: 100%;
-	display: block;
-	padding: 5px;
-	float: left;
-}
-
-
-@media(min-width: 760px){
-	.MessageRow .author{
-		float: left;
-		padding: 20px;
-	}
-
-	.MessageRow .text{
-		float: left;
-
-	}
-}
 
 
 
