@@ -16,18 +16,26 @@ app.use(express.static(__dirname + '/www'));
 server.listen(1337);
 
 io.on('connection', function (socket) {
+  var thisUser = null;
+
+  socket.on('newUser', function(user){
+    if(user.name.length){
+      users.push(user.name);
+      thisUser = user;
+      socket.emit('userAllowedAccess', user);
+      io.emit('newUserAdded', users);
+      socket.emit('newMessages', messages);
+    }
+  });
+
   socket.on('publishMessage', function(message){
     message.timestamp = new Date();
     messages.push(message);
     io.emit('newMessages', messages);
   });
 
-  socket.on('newUser', function(user){
-    if(user.name.length){
-      users.push(user.name);
-      io.emit('newUserAdded', user);
-      socket.emit('userAllowedAccess', user);
-      socket.emit('newMessages', messages);
-    }
+  socket.on('disconnect', function(message){
+    users.splice(users.indexOf(thisUser), 1);
+    io.emit('newUserAdded', users);
   });
 });

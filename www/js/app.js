@@ -80,7 +80,7 @@ var NameForm = React.createClass({displayName: 'NameForm',
       React.DOM.div({className: "col-sm-4 NameForm"}, 
         React.DOM.form({className: "form-inline"}, 
           React.DOM.div({className: "form-group"}, 
-            React.DOM.input({type: "text", placeholder: "Your name", className: "form-control", ref: "author"}), 
+            React.DOM.input({type: "text", placeholder: "Your name", className: "form-control", ref: "author", autoFocus: true}), 
             React.DOM.button({onClick: this.submit, className: "btn btn-success pull-right"}, "Start")
           )
         )
@@ -111,6 +111,19 @@ var PrettyTime = React.createClass({displayName: 'PrettyTime',
   }
 })
 /** @jsx React.DOM */
+var UserPanel = React.createClass({displayName: 'UserPanel',
+    
+    render: function() {
+        return (
+    		React.DOM.div({className: "UserPanel"}, 
+    			this.props.allUsers.map(function(user)   
+                    {return React.DOM.span({className: "username"}, " ", user, " ");}
+                )
+			)
+        	);
+    }
+});
+/** @jsx React.DOM */
 window.emit = null;
 
 window.onload = function(){ 
@@ -125,7 +138,9 @@ window.onload = function(){
     React.renderComponent(ChatForm({author: user.name}), document.getElementById('ChatForm'))
   });
 
-  socket.on('newUserAdded', function(data){      
+  socket.on('newUserAdded', function(data){ 
+    console.log(" Users : ",data);
+    React.renderComponent(UserPanel({allUsers: data}), document.getElementById('Users'))     
   });
 
   socket.on('newMessages', function(data){    

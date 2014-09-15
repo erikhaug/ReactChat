@@ -12,7 +12,7 @@ var NameForm = React.createClass({
       <div className="col-sm-4 NameForm">
         <form className="form-inline">
           <div className="form-group">
-            <input  type="text" placeholder="Your name" className="form-control" ref="author"></input>
+            <input  type="text" placeholder="Your name" className="form-control" ref="author" autoFocus></input>
             <button onClick={this.submit} className="btn btn-success pull-right">Start</button>
           </div>
         </form>

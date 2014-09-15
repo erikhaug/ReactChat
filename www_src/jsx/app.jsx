@@ -12,7 +12,9 @@ window.onload = function(){
     React.renderComponent(<ChatForm author={user.name}/>, document.getElementById('ChatForm'))
   });
 
-  socket.on('newUserAdded', function(data){      
+  socket.on('newUserAdded', function(data){ 
+    console.log(" Users : ",data);
+    React.renderComponent(<UserPanel allUsers={data}/>, document.getElementById('Users'))     
   });
 
   socket.on('newMessages', function(data){    

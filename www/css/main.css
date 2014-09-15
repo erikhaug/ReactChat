@@ -18,6 +18,20 @@ body {
 
 }
 
+.UserPanel {
+	overflow:auto;
+	overflow-x:hidden;
+    overflow-y:visible;
+    background-color: #ffffff;
+	height:500px;
+	padding: 10px 30px 10px 30px;
+}
+
+.UserPanel .username {
+	font-size: 20px;
+	display: block;
+	color: hsl(199, 43%, 48%);
+}
 .NameForm {
 	padding-left: 30px;
 }
@@ -42,7 +56,6 @@ body {
     overflow-y:visible;
     background-color: #ffffff;
 	height:500px;
-	width: 100%;
 	padding: 10px 30px 10px 30px;
 }
 
