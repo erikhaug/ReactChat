@@ -8,12 +8,14 @@ var server = http.Server(app);
 
 var io = require('socket.io')(server);
 
+app.use(express.static(__dirname + '/www'));
+
+server.listen(80);
+
 var messages = [];
 var users = [];
 
-app.use(express.static(__dirname + '/www'));
-
-server.listen(1337);
+var groupName = 'ChatRoom';
 
 io.on('connection', function (socket) {
   var thisUser = null;
@@ -22,18 +24,19 @@ io.on('connection', function (socket) {
     if(user.name.length){
       users.push(user);
       thisUser = user;
-      socket.emit('userAllowedAccess', user);
-      socket.join('ChatRoom');
-      io.to('ChatRoom').emit('newUserAdded', users);
-      socket.emit('newMessages', messages);
-      
+
+      socket.emit('welcome', user);
+      socket.join(groupName);
+
+      io.to(groupName).emit('users', users);
+      socket.emit('messages', messages);      
     }
   });
 
   socket.on('publishMessage', function(message){
     message.timestamp = new Date();
     messages.push(message);
-    io.to('ChatRoom').emit('newMessages', messages);
+    io.to(groupName).emit('messages', messages);
   });
 
   socket.on('disconnect', function(message){
@@ -41,6 +44,6 @@ io.on('connection', function (socket) {
     if(indexOfUser !== -1) {
       users.splice(indexOfUser, 1);
     }
-    io.to('ChatRoom').emit('newUserAdded', users);
+    io.to(groupName).emit('users', users);
   });
 });
