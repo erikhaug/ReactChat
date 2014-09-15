@@ -1,12 +1,12 @@
 var UserPanel = React.createClass({
     
-    render: function() {
-        return (
-    		<div className="UserPanel">
-    			{this.props.allUsers.map(user =>  
-                    <span className="username"> {user} </span>
-                )}  
-			</div>
-        	);
-    }
+  render: function() {
+    return (
+      <ul className="list-group">
+        {this.props.allUsers.map(user =>  
+          <li className="list-group-item">{user}</li>
+        )}  
+      </ul>
+    );
+  }
 });

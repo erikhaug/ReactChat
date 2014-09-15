@@ -13,10 +13,12 @@ var ChatForm = React.createClass({displayName: 'ChatForm',
   render : function () {
     return (
       React.DOM.form({className: "form"}, 
-        React.DOM.div({className: "input-group"}, 
-          React.DOM.input({type: "text", className: "form-control", placeholder: "Your message", ref: "message", autoFocus: true}), 
-          React.DOM.span({className: "input-group-btn"}, 
-            React.DOM.button({className: "btn btn-success", onClick: this.submit, type: "submit"}, "Send")
+        React.DOM.div({className: "form-group"}, 
+          React.DOM.div({className: "input-group"}, 
+            React.DOM.input({type: "text", className: "form-control", placeholder: "Your message", ref: "message", autoFocus: true}), 
+            React.DOM.span({className: "input-group-btn"}, 
+              React.DOM.button({className: "btn btn-success", onClick: this.submit, type: "submit"}, "Send")
+            )
           )
         )
       )
@@ -47,7 +49,7 @@ var MessageBoard = React.createClass({displayName: 'MessageBoard',
   },
   render : function () {
     return (
-      React.DOM.div({className: "MessageBoard"}, 
+      React.DOM.div({className: "list-group"}, 
         this.props.messages.map(function(message) 
           {return MessageRow({message: message});}
         )
@@ -59,10 +61,13 @@ var MessageBoard = React.createClass({displayName: 'MessageBoard',
 var MessageRow = React.createClass({displayName: 'MessageRow',
   render : function () {
     return (
-      React.DOM.div({className: "MessageRow"}, 
-        React.DOM.span({className: "author"}, this.props.message.name), 
-        React.DOM.p({className: "message"}, this.props.message.text), 
-        PrettyTime({className: "timestamp", value: this.props.message.timestamp})
+      React.DOM.div({className: "list-group-item"}, 
+        React.DOM.h4({className: "list-group-item-heading"}, this.props.message.text), 
+        React.DOM.strong({className: "list-group-item-text"}, this.props.message.name), 
+        " • ", 
+        React.DOM.span({className: "list-group-item-text text-muted"}, 
+          PrettyTime({value: this.props.message.timestamp})
+        )
       )
     );
   }
@@ -115,15 +120,15 @@ var PrettyTime = React.createClass({displayName: 'PrettyTime',
 /** @jsx React.DOM */
 var UserPanel = React.createClass({displayName: 'UserPanel',
     
-    render: function() {
-        return (
-    		React.DOM.div({className: "UserPanel"}, 
-    			this.props.allUsers.map(function(user)   
-                    {return React.DOM.span({className: "username"}, " ", user, " ");}
-                )
-			)
-        	);
-    }
+  render: function() {
+    return (
+      React.DOM.ul({className: "list-group"}, 
+        this.props.allUsers.map(function(user)   
+          {return React.DOM.li({className: "list-group-item"}, user);}
+        )
+      )
+    );
+  }
 });
 /** @jsx React.DOM */
 window.emit = null;

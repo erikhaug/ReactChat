@@ -11,7 +11,7 @@ var MessageBoard = React.createClass({
   },
   render : function () {
     return (
-      <div className="MessageBoard">
+      <div className="list-group">
         {this.props.messages.map(message =>
           <MessageRow message={message} />
         )}
