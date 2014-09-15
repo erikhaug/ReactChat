@@ -19,6 +19,7 @@
     "gulp-concat": "^2.4.0",
     "gulp-react": "^1.0.1",
     "q": "^1.0.1",
-    "socket.io": "^1.1.0"
+    "socket.io": "^1.1.0",
+    "command-dispatcher": "0.0.1"
   }
 }

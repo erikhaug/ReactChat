@@ -1,6 +1,6 @@
 var express = require('express');
 var http = require('http');
-var commandDispatcher = require('./server/commandDispatcher');
+var commandDispatcher = require('command-dispatcher');
 var EventEmitter = require('events').EventEmitter;
 
 var app = express();
