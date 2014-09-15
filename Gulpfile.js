@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 var react = require('gulp-react');
 var concat = require('gulp-concat');
-
+var mario = require('gulp-plumber');
 
 var path = {
   jsx: 'www_src/jsx/*.jsx',
@@ -16,6 +16,7 @@ gulp.task('default', ['html', 'css', 'jsx', 'img'], function(){
 
 gulp.task('jsx', function(){
   gulp.src(path.jsx)
+  .pipe(mario())
   .pipe(react({harmony: true}))
   .pipe(concat('app.js'))
   .pipe(gulp.dest('www/js/'));
