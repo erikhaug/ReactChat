@@ -43,6 +43,16 @@ var Header = React.createClass({displayName: 'Header',
 })
 /** @jsx React.DOM */
 var MessageBoard = React.createClass({displayName: 'MessageBoard',
+  componentDidUpdate: function(){
+    this.scrollToBottom();
+  },
+  componentDidMount: function(){
+    this.scrollToBottom();
+  },
+  scrollToBottom: function(){
+    var elem = this.getDOMNode();
+    elem.scrollTop = elem.scrollHeight;
+  },
   render : function () {
     return (
       React.DOM.div({className: "MessageBoard"}, 
@@ -145,8 +155,6 @@ window.onload = function(){
 
   socket.on('newMessages', function(data){    
     React.renderComponent(MessageBoard({messages: data}), document.getElementById('MessageBoard'))
-    var elem = document.getElementById('MessageBoard');
-    elem.scrollTop = elem.scrollHeight;
   });
      
   window.emit = function(event, data){

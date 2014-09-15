@@ -19,8 +19,6 @@ window.onload = function(){
 
   socket.on('newMessages', function(data){    
     React.renderComponent(<MessageBoard messages={data}/>, document.getElementById('MessageBoard'))
-    var elem = document.getElementById('MessageBoard');
-    elem.scrollTop = elem.scrollHeight;
   });
      
   window.emit = function(event, data){
