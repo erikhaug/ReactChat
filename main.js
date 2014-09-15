@@ -20,7 +20,7 @@ io.on('connection', function (socket) {
 
   socket.on('newUser', function(user){
     if(user.name.length){
-      users.push(user.name);
+      users.push(user);
       thisUser = user;
       socket.emit('userAllowedAccess', user);
       socket.join('ChatRoom');
@@ -37,7 +37,10 @@ io.on('connection', function (socket) {
   });
 
   socket.on('disconnect', function(message){
-    users.splice(users.indexOf(thisUser), 1);
+    var indexOfUser = users.indexOf(thisUser);
+    if(indexOfUser !== -1) {
+      users.splice(indexOfUser, 1);
+    }
     io.to('ChatRoom').emit('newUserAdded', users);
   });
 });
