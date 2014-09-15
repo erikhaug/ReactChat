@@ -10,7 +10,7 @@ var io = require('socket.io')(server);
 
 app.use(express.static(__dirname + '/www'));
 
-server.listen(80);
+server.listen(1337);
 
 var messages = [];
 var users = [];

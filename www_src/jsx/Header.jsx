@@ -3,6 +3,7 @@ var Header = React.createClass({
     return (
       <header className="page-header">
         <h1>{this.props.title}</h1>
+        
       </header>
     );
   }

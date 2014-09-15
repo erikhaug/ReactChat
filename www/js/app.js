@@ -29,10 +29,26 @@ var Header = React.createClass({displayName: 'Header',
     return (
       React.DOM.header({className: "page-header"}, 
         React.DOM.h1(null, this.props.title)
+        
       )
     );
   }
 })
+/** @jsx React.DOM */
+var LogoutButton = React.createClass({displayName: 'LogoutButton',
+  logout: function (e) {
+    e.preventDefault();
+    localStorage.removeItem('user');
+    window.location = '';
+  },
+  render: function() {
+    return (
+      React.DOM.div({className: "clearfix"}, 
+        React.DOM.button({onClick: this.logout, className: "btn btn-danger pull-right"}, "Logg ut")
+      )
+    );
+  }
+});
 /** @jsx React.DOM */
 var MessageBoard = React.createClass({displayName: 'MessageBoard',
   render : function () {
@@ -136,8 +152,8 @@ var PrettyTime = React.createClass({displayName: 'PrettyTime',
 /** @jsx React.DOM */
 var UserPanel = React.createClass({displayName: 'UserPanel',
     
-  render: function() {
-    return (
+    render: function() {
+        return (
       React.DOM.div({className: "panel panel-default"}, 
         React.DOM.div({className: "panel-heading"}, 
           "Brukere"
@@ -148,11 +164,11 @@ var UserPanel = React.createClass({displayName: 'UserPanel',
           )
         ), 
         React.DOM.div({className: "panel-footer"}, 
-          " "
+          LogoutButton(null)
         )
       )
-    );
-  }
+        	);
+    }
 });
 /** @jsx React.DOM */
 window.emit = null;
@@ -160,20 +176,30 @@ window.emit = null;
 window.onload = function(){ 
   
   var socket = io();
-  
+
+  var user = localStorage.getItem('user');
+
   var messages = [];
   var me = {};
 
   React.renderComponent(Header({title: "React Chat"}), document.getElementById('Header'))
   React.renderComponent(NameForm(null), document.getElementById('NameForm'))
   
+  if (user) {
+      socket.emit('newUser', {name: user});
+  }
+
+    
   socket.on('welcome', function(user){ 
+    localStorage.setItem('user', user.name);
     me = user;
     React.unmountComponentAtNode(document.getElementById('NameForm'));
+
   });
+  
 
   socket.on('users', function(data){ 
-    React.renderComponent(UserPanel({allUsers: data}), document.getElementById('Users'))     
+    React.renderComponent(UserPanel({allUsers: data}), document.getElementById('Users'))
   });
 
   socket.on('messages', function(data){    

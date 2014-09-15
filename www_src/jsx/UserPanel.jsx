@@ -1,7 +1,7 @@
 var UserPanel = React.createClass({
     
-  render: function() {
-    return (
+    render: function() {
+        return (
       <div className="panel panel-default">
         <div className="panel-heading">
           Brukere
@@ -12,9 +12,9 @@ var UserPanel = React.createClass({
           )}  
         </ul>
         <div className="panel-footer">
-          &nbsp;
+          <LogoutButton />
         </div>
       </div>
-    );
-  }
+        	);
+    }
 });
