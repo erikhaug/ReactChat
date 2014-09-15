@@ -7,7 +7,7 @@ var LogoutButton = React.createClass({
   render: function() {
     return (
       <div className="clearfix">
-        <button onClick={this.logout} className="btn btn-danger pull-right">Logg ut</button>
+        <button onClick={this.logout} className="btn btn-danger pull-right">Log out</button>
       </div>
     );
   }

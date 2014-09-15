@@ -13,18 +13,21 @@ var users = [];
 var groupName = 'ChatRoom';
 
 io.on('connection', function (socket) {
-  var thisUser = null;
-
-  socket.on('newUser', function(user){
-    if(user.name.length){
+  var user = null;
+  
+  socket.on('newUser', function(username){
+    if(username.length){
+      user = {
+        username: username,
+        id: socket.id
+      }
       users.push(user);
-      thisUser = user;
 
       socket.emit('welcome', user);
       socket.join(groupName);
 
       io.to(groupName).emit('users', users);
-      socket.emit('messages', messages);      
+      socket.emit('messages', messages);
     }
   });
 
@@ -35,11 +38,15 @@ io.on('connection', function (socket) {
   });
 
   socket.on('disconnect', function(message){
-    var indexOfUser = users.indexOf(thisUser);
+    var indexOfUser = users.indexOf(user);
     if(indexOfUser !== -1) {
       users.splice(indexOfUser, 1);
     }
     io.to(groupName).emit('users', users);
+  });
+  
+  socket.on('pokeUser', function(userId){
+    io.to(userId).emit('poke', user.username);
   });
 });
 

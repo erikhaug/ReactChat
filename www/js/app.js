@@ -1,39 +1,37 @@
 /** @jsx React.DOM */
-var ChatForm = React.createClass({displayName: 'ChatForm',
-  submit : function  (e) {
+var Header = React.createClass({displayName: 'Header',
+  render : function () {
+    //what here?
+  }
+})
+/** @jsx React.DOM */
+var Login = React.createClass({displayName: 'Login',
+  submit: function (e) {
     e.preventDefault();
-    var author = this.props.author;
-    var message = this.refs.message.getDOMNode().value.trim();    
-    if (!message) {
+    
+    var username = 'who are you?';
+    
+    if (!username) {
       return;
     }
-    emit('publishMessage', {name : author, text : message});
-    this.refs.message.getDOMNode().value = '';
+    
+    //create user here
   },
-  render : function () {
+  render: function() {
     return (
-      React.DOM.form({className: "form"}, 
-        React.DOM.div({className: "input-group"}, 
-          React.DOM.input({type: "text", className: "form-control", placeholder: "Your message", ref: "message", autoFocus: true}), 
-          React.DOM.span({className: "input-group-btn"}, 
-            React.DOM.button({className: "btn btn-success", onClick: this.submit, type: "submit"}, "Send")
+      React.DOM.div({className: "jumbotron"}, 
+        React.DOM.form({className: "form"}, 
+          React.DOM.div({className: "input-group"}, 
+            React.DOM.input({type: "text", placeholder: "Your name", className: "form-control", autoFocus: true}), 
+            React.DOM.span({className: "input-group-btn"}, 
+              React.DOM.button({className: "btn btn-success", type: "submit"}, "Start")
+            )
           )
         )
       )
     );
   }
-})
-/** @jsx React.DOM */
-var Header = React.createClass({displayName: 'Header',
-  render : function () {
-    return (
-      React.DOM.header({className: "page-header"}, 
-        React.DOM.h1(null, this.props.title)
-        
-      )
-    );
-  }
-})
+});
 /** @jsx React.DOM */
 var LogoutButton = React.createClass({displayName: 'LogoutButton',
   logout: function (e) {
@@ -44,22 +42,66 @@ var LogoutButton = React.createClass({displayName: 'LogoutButton',
   render: function() {
     return (
       React.DOM.div({className: "clearfix"}, 
-        React.DOM.button({onClick: this.logout, className: "btn btn-danger pull-right"}, "Logg ut")
+        React.DOM.button({onClick: this.logout, className: "btn btn-danger pull-right"}, "Log out")
       )
     );
   }
 });
+/** @jsx React.DOM */
+var Message = React.createClass({displayName: 'Message',
+  render : function () {
+    return (
+      React.DOM.div({className: "list-group-item"}, 
+        React.DOM.h4({className: "list-group-item-heading"}, 
+          "message"
+        ), 
+        React.DOM.strong({className: "list-group-item-text"}, 
+          "username"
+        ), 
+        " • ", 
+        React.DOM.span({className: "list-group-item-text text-muted"}, 
+          "timestamp"
+        )
+      )
+    );
+  }
+})
 /** @jsx React.DOM */
 var MessageBoard = React.createClass({displayName: 'MessageBoard',
   render : function () {
     return (
       React.DOM.div({className: "panel panel-default"}, 
         React.DOM.div({className: "panel-heading"}, 
-          "Meldinger"
+          "Messages"
         ), 
-        MessageList({messages: this.props.messages}), 
+        "put message list here", 
         React.DOM.div({className: "panel-footer"}, 
-          ChatForm({author: this.props.author})
+          "put message input here"
+        )
+      )
+    );
+  }
+})
+/** @jsx React.DOM */
+var MessageInput = React.createClass({displayName: 'MessageInput',
+  submit : function  (e) {
+    e.preventDefault();
+    var username = this.props.username;
+    var message = 'get the message from the input called message';
+    if (!message) {
+      return;
+    }
+    //publishMessage to server
+    //clear the input element
+  },
+  render : function () {
+    return (
+      React.DOM.form({className: "form"}, 
+        React.DOM.div({className: "input-group"}, 
+          React.DOM.input({type: "text", className: "form-control", placeholder: "Your message", ref: "message", autoFocus: true}), 
+          React.DOM.span({className: "input-group-btn"}, 
+            React.DOM.button({className: "btn btn-success", type: "submit"}, "Send")
+          )
         )
       )
     );
@@ -67,12 +109,6 @@ var MessageBoard = React.createClass({displayName: 'MessageBoard',
 })
 /** @jsx React.DOM */
 var MessageList = React.createClass({displayName: 'MessageList',
-  componentDidUpdate: function(){
-    this.scrollToBottom();
-  },
-  componentDidMount: function(){
-    this.scrollToBottom();
-  },
   scrollToBottom: function(){
     var elem = this.getDOMNode();
     elem.scrollTop = elem.scrollHeight;
@@ -80,53 +116,11 @@ var MessageList = React.createClass({displayName: 'MessageList',
   render : function () {
     return (
       React.DOM.div({className: "list-group"}, 
-        this.props.messages.map(function(message) 
-          {return MessageRow({message: message});}
-        )
+        "render all messages here"
       )
     );
   }
 })
-/** @jsx React.DOM */
-var MessageRow = React.createClass({displayName: 'MessageRow',
-  render : function () {
-    return (
-      React.DOM.div({className: "list-group-item"}, 
-        React.DOM.h4({className: "list-group-item-heading"}, this.props.message.text), 
-        React.DOM.strong({className: "list-group-item-text"}, this.props.message.name), 
-        " • ", 
-        React.DOM.span({className: "list-group-item-text text-muted"}, 
-          PrettyTime({value: this.props.message.timestamp})
-        )
-      )
-    );
-  }
-})
-/** @jsx React.DOM */
-var NameForm = React.createClass({displayName: 'NameForm',
-  submit: function (e) {
-    e.preventDefault();
-    var author = this.refs.author.getDOMNode().value.trim();
-    if (!author) {
-      return;
-    };
-    emit('newUser', {name : author});
-  },
-  render: function() {
-    return (
-      React.DOM.div({className: "jumbotron"}, 
-        React.DOM.form({className: "form"}, 
-          React.DOM.div({className: "input-group"}, 
-            React.DOM.input({type: "text", placeholder: "Your name", className: "form-control", ref: "author", autoFocus: true}), 
-            React.DOM.span({className: "input-group-btn"}, 
-              React.DOM.button({onClick: this.submit, className: "btn btn-success"}, "Start")
-            )
-          )
-        )
-      )
-    );
-  }
-});
 /** @jsx React.DOM */
 var PrettyTime = React.createClass({displayName: 'PrettyTime',
   ticker: null,
@@ -150,25 +144,23 @@ var PrettyTime = React.createClass({displayName: 'PrettyTime',
   }
 })
 /** @jsx React.DOM */
-var UserPanel = React.createClass({displayName: 'UserPanel',
-    
-    render: function() {
-        return (
+var UserList = React.createClass({displayName: 'UserList',
+
+  render: function() {
+    return (
       React.DOM.div({className: "panel panel-default"}, 
         React.DOM.div({className: "panel-heading"}, 
-          "Brukere"
+          "Users"
         ), 
         React.DOM.ul({className: "list-group"}, 
-          this.props.allUsers.map(function(user)   
-            {return React.DOM.li({className: "list-group-item"}, user);}
-          )
+          "many users"
         ), 
         React.DOM.div({className: "panel-footer"}, 
-          LogoutButton(null)
+          "click here to log out"
         )
       )
-        	);
-    }
+    );
+  }
 });
 /** @jsx React.DOM */
 window.emit = null;
@@ -177,33 +169,20 @@ window.onload = function(){
   
   var socket = io();
 
-  var user = localStorage.getItem('user');
-
   var messages = [];
   var me = {};
-
-  React.renderComponent(Header({title: "React Chat"}), document.getElementById('Header'))
-  React.renderComponent(NameForm(null), document.getElementById('NameForm'))
-  
-  if (user) {
-      socket.emit('newUser', {name: user});
-  }
-
     
-  socket.on('welcome', function(user){ 
-    localStorage.setItem('user', user.name);
+  socket.on('welcome', function(user){
     me = user;
-    React.unmountComponentAtNode(document.getElementById('NameForm'));
+    console.log("welcome", user);
+  });  
 
-  });
-  
-
-  socket.on('users', function(data){ 
-    React.renderComponent(UserPanel({allUsers: data}), document.getElementById('Users'))
+  socket.on('users', function(data){
+    console.log("users", data);
   });
 
-  socket.on('messages', function(data){    
-    React.renderComponent(MessageBoard({messages: data, author: me.name}), document.getElementById('MessageBoard'))
+  socket.on('messages', function(data){
+    console.log("messages", data);
   });
      
   window.emit = function(event, data){

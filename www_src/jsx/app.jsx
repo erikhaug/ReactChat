@@ -4,33 +4,20 @@ window.onload = function(){
   
   var socket = io();
 
-  var user = localStorage.getItem('user');
-
   var messages = [];
   var me = {};
-
-  React.renderComponent(<Header title="React Chat"/>, document.getElementById('Header'))
-  React.renderComponent(<NameForm/>, document.getElementById('NameForm'))
-  
-  if (user) {
-      socket.emit('newUser', {name: user});
-  }
-
     
-  socket.on('welcome', function(user){ 
-    localStorage.setItem('user', user.name);
+  socket.on('welcome', function(user){
     me = user;
-    React.unmountComponentAtNode(document.getElementById('NameForm'));
+    console.log("welcome", user);
+  });  
 
-  });
-  
-
-  socket.on('users', function(data){ 
-    React.renderComponent(<UserPanel allUsers={data}/>, document.getElementById('Users'))
+  socket.on('users', function(data){
+    console.log("users", data);
   });
 
-  socket.on('messages', function(data){    
-    React.renderComponent(<MessageBoard messages={data} author={me.name}/>, document.getElementById('MessageBoard'))
+  socket.on('messages', function(data){
+    console.log("messages", data);
   });
      
   window.emit = function(event, data){

@@ -1,15 +1,18 @@
-var MessageBoard = React.createClass({
-  render : function () {
+var UserList = React.createClass({
+
+  render: function() {
     return (
       <div className="panel panel-default">
         <div className="panel-heading">
-          Messages
+          Users
         </div>
-        put message list here
+        <ul className="list-group">
+          many users
+        </ul>
         <div className="panel-footer">
-          put message input here
+          click here to log out
         </div>
       </div>
     );
   }
-})
+});
