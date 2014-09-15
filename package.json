@@ -11,5 +11,12 @@
     "Chat"
   ],
   "author": "Erik Haug",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "events": "^1.0.2",
+    "express": "^4.9.0",
+    "gulp": "^3.8.8",
+    "q": "^1.0.1",
+    "socket.io": "^1.1.0"
+  }
 }
