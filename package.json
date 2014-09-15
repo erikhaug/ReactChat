@@ -2,7 +2,7 @@
   "name": "ReactChat",
   "version": "0.0.0",
   "description": "The chat that reacts",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

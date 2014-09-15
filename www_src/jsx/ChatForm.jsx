@@ -6,8 +6,7 @@ var ChatForm = React.createClass({
 	    if (!message || !author) {
 	      return;
 	    }
-	    this.props.onSubmit({name : author, text : message});
-
+	    emit('publishMessage', {name : author, text : message});
 	    this.refs.message.getDOMNode().value = '';
 	},
 	render : function () {

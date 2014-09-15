@@ -3,9 +3,16 @@ window.emit = null;
 window.onload = function(){ 
   
   var socket = io();
+
+  React.renderComponent(<Header title="React Chat"/>, document.getElementById('Header'))
+  React.renderComponent(<NameForm/>, document.getElementById('NameForm'))
   
-  socket.on('newClient', function(data){    
-    React.renderComponent(<ChatRoom title={data.title}/>, document.getElementById('ChatRoom'))
+  socket.on('userAllowedAccess', function(data){ 
+    React.unmountComponentAtNode(document.getElementById('NameForm'));
+    React.renderComponent(<ChatForm />, document.getElementById('ChatForm'))
+  });
+
+  socket.on('newUserAdded', function(data){      
   });
 
   socket.on('newMessages', function(data){    

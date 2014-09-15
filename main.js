@@ -9,6 +9,7 @@ var server = http.Server(app);
 var io = require('socket.io')(server);
 
 var messages = [];
+var users = [];
 
 app.use(express.static(__dirname + '/www'));
 
@@ -19,7 +20,11 @@ io.on('connection', function (socket) {
 		messages.push(message);
     io.emit('newMessages', messages);
   });
-  	
-  socket.emit('newClient', { title: 'Chat Room' });
-  socket.emit('newMessages', messages);
+
+  socket.on('newUser', function(user){
+    users.push(user.name);
+    io.emit('newUserAdded', user);
+    socket.emit('userAllowedAccess', user);
+    socket.emit('newMessages', messages);
+  });
 });

@@ -7,8 +7,7 @@ var ChatForm = React.createClass({displayName: 'ChatForm',
 	    if (!message || !author) {
 	      return;
 	    }
-	    this.props.onSubmit({name : author, text : message});
-
+	    emit('publishMessage', {name : author, text : message});
 	    this.refs.message.getDOMNode().value = '';
 	},
 	render : function () {
@@ -40,23 +39,17 @@ var ChatForm = React.createClass({displayName: 'ChatForm',
 	}
 })
 /** @jsx React.DOM */
-var ChatRoom = React.createClass({displayName: 'ChatRoom',
+var Header = React.createClass({displayName: 'Header',
 	submitMessage : function (message) {
 		console.log(message);
-		emit('publishMessage', message);
+		
 	},
 	render : function () {
 		return (
-			React.DOM.div(null, 
+			React.DOM.div(null, 				
 				React.DOM.header({className: "page-header"}, 
 					React.DOM.h1(null, this.props.title)
-				), 
-				React.DOM.div({id: "MessageBoard", className: "MessageBoard"}
-
-				), 
-				React.DOM.div(null, 
-					ChatForm({onSubmit: this.submitMessage})
-				)
+				)		
 				
 			)
 		
@@ -67,10 +60,10 @@ var ChatRoom = React.createClass({displayName: 'ChatRoom',
 var MessageBoard = React.createClass({displayName: 'MessageBoard',
 	render : function () {
 		return (
-			React.DOM.div(null, 
+			React.DOM.div({className: "MessageBoard"}, 
 				this.props.messages.map(function(message)   
 					{return MessageRow({message: message});}
-				)		
+				)	
 			)
 		
 			);
@@ -89,14 +82,41 @@ var MessageRow = React.createClass({displayName: 'MessageRow',
 	}
 })
 /** @jsx React.DOM */
+var NameForm = React.createClass({displayName: 'NameForm',
+    submit: function (e) {
+    	e.preventDefault();
+    	var author = this.refs.author.getDOMNode().value.trim();
+    	emit('newUser', {name : author});
+    },
+    render: function() {
+        return (
+    		React.DOM.div({className: "col-sm-4"}, 
+    			React.DOM.form({className: "form-inline"}, 
+			  		React.DOM.div({className: "form-group"}, 
+					    React.DOM.input({type: "text", placeholder: "Your name", className: "form-control", ref: "author"}), 
+					    React.DOM.button({onClick: this.submit, className: "btn btn-success pull-right"}, "Send")
+				   )
+				)
+			)
+        	);
+    }
+});
+/** @jsx React.DOM */
 window.emit = null;
 
 window.onload = function(){ 
   
   var socket = io();
+
+  React.renderComponent(Header({title: "React Chat"}), document.getElementById('Header'))
+  React.renderComponent(NameForm(null), document.getElementById('NameForm'))
   
-  socket.on('newClient', function(data){    
-    React.renderComponent(ChatRoom({title: data.title}), document.getElementById('ChatRoom'))
+  socket.on('userAllowedAccess', function(data){ 
+    React.unmountComponentAtNode(document.getElementById('NameForm'));
+    React.renderComponent(ChatForm(null), document.getElementById('ChatForm'))
+  });
+
+  socket.on('newUserAdded', function(data){      
   });
 
   socket.on('newMessages', function(data){    
