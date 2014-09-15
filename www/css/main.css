@@ -1,0 +1,13 @@
+
+
+#MessageBoard .list-group,
+#Users .list-group{
+	overflow-x:hidden;
+    overflow-y:auto;
+	height:500px;
+}
+
+
+
+
+
