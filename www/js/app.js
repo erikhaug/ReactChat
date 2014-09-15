@@ -12,19 +12,11 @@ var ChatForm = React.createClass({displayName: 'ChatForm',
   },
   render : function () {
     return (
-      React.DOM.div({className: "ChatForm"}, 
-        React.DOM.form({className: "form-horizontal ", role: "form"}, 
-          React.DOM.div({className: "form-group"}, 
-            React.DOM.label({htmlFor: "inputMessage", className: "col-sm-2 control-label"}, "Message"), 
-            React.DOM.div({className: "col-sm-10"}, 
-                React.DOM.textarea({className: "form-control", placeholder: "Your message", rows: "3", ref: "message"})
-            )
-          ), 
-
-          React.DOM.div({className: "form-group "}, 
-            React.DOM.div({className: "col-sm-12 btn-group"}, 
-              React.DOM.button({onClick: this.submit, className: "btn btn-lg btn-success pull-right"}, "Send")
-            )
+      React.DOM.form({className: "form"}, 
+        React.DOM.div({className: "input-group"}, 
+          React.DOM.input({type: "text", className: "form-control", placeholder: "Your message", ref: "message", autoFocus: true}), 
+          React.DOM.span({className: "input-group-btn"}, 
+            React.DOM.button({className: "btn btn-success", onClick: this.submit, type: "submit"}, "Send")
           )
         )
       )

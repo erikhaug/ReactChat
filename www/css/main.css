@@ -40,16 +40,6 @@ body {
 	margin-left: 5px;
 }
 
-.ChatForm label{
-	color: #FD8E00;	
-}
-
-.ChatForm {
-	padding: 15px;
-	max-width: 600px;
-	
-}
-
 .MessageBoard {
 	overflow:auto;
 	overflow-x:hidden;
