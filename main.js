@@ -42,3 +42,5 @@ io.on('connection', function (socket) {
     io.to(groupName).emit('users', users);
   });
 });
+
+console.log("chat running on http://localhost:1337");

@@ -15,13 +15,14 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.9.0",
+    "socket.io": "^1.1.0",
+    "moment": "~2.8.3"
+  },
+  "devDependencies": {
     "gulp": "^3.8.8",
     "gulp-concat": "^2.4.0",
     "gulp-react": "^1.0.1",
-    "q": "^1.0.1",
-    "socket.io": "^1.1.0",
-    "gulp-plumber": "~0.6.5",
-    "moment": "~2.8.3"
+    "gulp-plumber": "~0.6.5"
   },
   "engines": {
     "node": "0.10.x"
