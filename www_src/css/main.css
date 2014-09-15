@@ -18,6 +18,14 @@ body {
 
 }
 
+.NameForm {
+	padding-left: 30px;
+}
+
+.NameForm button{
+	margin-left: 5px;
+}
+
 .ChatForm label{
 	color: #FD8E00;	
 }

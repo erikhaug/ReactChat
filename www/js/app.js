@@ -80,15 +80,18 @@ var NameForm = React.createClass({displayName: 'NameForm',
     submit: function (e) {
     	e.preventDefault();
     	var author = this.refs.author.getDOMNode().value.trim();
+        if (!author) {
+            return;
+        };
     	emit('newUser', {name : author});
     },
     render: function() {
         return (
-    		React.DOM.div({className: "col-sm-4"}, 
+    		React.DOM.div({className: "col-sm-4 NameForm"}, 
     			React.DOM.form({className: "form-inline"}, 
 			  		React.DOM.div({className: "form-group"}, 
 					    React.DOM.input({type: "text", placeholder: "Your name", className: "form-control", ref: "author"}), 
-					    React.DOM.button({onClick: this.submit, className: "btn btn-success pull-right"}, "Send")
+					    React.DOM.button({onClick: this.submit, className: "btn btn-success pull-right"}, "Start")
 				   )
 				)
 			)
