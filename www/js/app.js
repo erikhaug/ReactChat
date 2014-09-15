@@ -39,7 +39,7 @@ var LogoutButton = React.createClass({displayName: 'LogoutButton',
   logout: function (e) {
     e.preventDefault();
     localStorage.removeItem('user');
-    window.location = '';
+    window.location.reload();
   },
   render: function() {
     return (
