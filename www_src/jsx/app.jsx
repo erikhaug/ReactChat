@@ -11,10 +11,11 @@ window.onload = function(){
   
   React.renderComponent(<Header title={title} />, document.querySelector('#Header'));
   React.renderComponent(<Login />, document.querySelector('#Login'));
-    
+      
   socket.on('welcome', function(user){
     me = user;
     console.log("welcome", user);
+    localStorage.setItem('user', user.username);
     React.unmountComponentAtNode(document.querySelector("#Login"));
     React.renderComponent(<MessageBoard messages={messages} />, document.querySelector('#MessageBoard'));
   });  
@@ -32,6 +33,10 @@ window.onload = function(){
      
   window.emit = function(event, data){
     socket.emit(event, data);
+  }
+  
+  if(localStorage.hasOwnProperty('user')){
+    emit('newUser', localStorage.getItem('user'));
   }
   
 }
