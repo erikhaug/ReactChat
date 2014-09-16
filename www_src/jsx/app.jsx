@@ -16,7 +16,7 @@ window.onload = function(){
     me = user;
     console.log("welcome", user);
     React.unmountComponentAtNode(document.querySelector("#Login"));
-    React.renderComponent(<MessageBoard />, document.querySelector('#MessageBoard'));
+    React.renderComponent(<MessageBoard messages={messages} />, document.querySelector('#MessageBoard'));
   });  
 
   socket.on('users', function(data){
@@ -25,6 +25,8 @@ window.onload = function(){
 
   socket.on('messages', function(data){
     console.log("messages", data);
+    messages = data;
+    React.renderComponent(<MessageBoard messages={messages} />, document.querySelector('#MessageBoard'));
   });
      
   window.emit = function(event, data){

@@ -55,14 +55,14 @@ var Message = React.createClass({displayName: 'Message',
     return (
       React.DOM.div({className: "list-group-item"}, 
         React.DOM.h4({className: "list-group-item-heading"}, 
-          "message"
+          this.props.message
         ), 
         React.DOM.strong({className: "list-group-item-text"}, 
-          "username"
+          this.props.username
         ), 
         " • ", 
         React.DOM.span({className: "list-group-item-text text-muted"}, 
-          "timestamp"
+          PrettyTime({value: this.props.timestamp})
         )
       )
     );
@@ -76,7 +76,7 @@ var MessageBoard = React.createClass({displayName: 'MessageBoard',
         React.DOM.div({className: "panel-heading"}, 
           "Messages"
         ), 
-        "put message list here", 
+        MessageList({messages: this.props.messages}), 
         React.DOM.div({className: "panel-footer"}, 
           MessageInput(null)
         )
@@ -112,6 +112,9 @@ var MessageInput = React.createClass({displayName: 'MessageInput',
 })
 /** @jsx React.DOM */
 var MessageList = React.createClass({displayName: 'MessageList',
+  componentDidUpdate: function(){
+    this.scrollToBottom();
+  },
   scrollToBottom: function(){
     var elem = this.getDOMNode();
     elem.scrollTop = elem.scrollHeight;
@@ -119,7 +122,9 @@ var MessageList = React.createClass({displayName: 'MessageList',
   render : function () {
     return (
       React.DOM.div({className: "list-group"}, 
-        "render all messages here"
+        this.props.messages.map(function(message, index)  
+          {return Message({message: message.text, username: message.username, timestamp: message.timestamp, key: index});}
+        )
       )
     );
   }
@@ -184,7 +189,7 @@ window.onload = function(){
     me = user;
     console.log("welcome", user);
     React.unmountComponentAtNode(document.querySelector("#Login"));
-    React.renderComponent(MessageBoard(null), document.querySelector('#MessageBoard'));
+    React.renderComponent(MessageBoard({messages: messages}), document.querySelector('#MessageBoard'));
   });  
 
   socket.on('users', function(data){
@@ -193,6 +198,8 @@ window.onload = function(){
 
   socket.on('messages', function(data){
     console.log("messages", data);
+    messages = data;
+    React.renderComponent(MessageBoard({messages: messages}), document.querySelector('#MessageBoard'));
   });
      
   window.emit = function(event, data){
