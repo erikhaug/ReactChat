@@ -11,22 +11,22 @@ var Login = React.createClass({displayName: 'Login',
   submit: function (e) {
     e.preventDefault();
     
-    var username = 'who are you?';
+    var username = this.refs.username.getDOMNode().value.trim();
     
     if (!username) {
       return;
     }
     
-    //create user here
+    emit("newUser", username);
   },
   render: function() {
     return (
       React.DOM.div({className: "jumbotron"}, 
         React.DOM.form({className: "form"}, 
           React.DOM.div({className: "input-group"}, 
-            React.DOM.input({type: "text", placeholder: "Your name", className: "form-control", autoFocus: true}), 
+            React.DOM.input({type: "text", placeholder: "Your name", className: "form-control", ref: "username", autoFocus: true}), 
             React.DOM.span({className: "input-group-btn"}, 
-              React.DOM.button({className: "btn btn-success", type: "submit"}, "Start")
+              React.DOM.button({className: "btn btn-success", onClick: this.submit, type: "submit"}, "Start")
             )
           )
         )
@@ -177,6 +177,7 @@ window.onload = function(){
   var title = "React Chat";
   
   React.renderComponent(Header({title: title}), document.querySelector('#Header'));
+  React.renderComponent(Login(null), document.querySelector('#Login'));
     
   socket.on('welcome', function(user){
     me = user;

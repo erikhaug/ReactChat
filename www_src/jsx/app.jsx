@@ -10,6 +10,7 @@ window.onload = function(){
   var title = "React Chat";
   
   React.renderComponent(<Header title={title} />, document.querySelector('#Header'));
+  React.renderComponent(<Login />, document.querySelector('#Login'));
     
   socket.on('welcome', function(user){
     me = user;
