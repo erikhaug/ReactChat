@@ -1,4 +1,6 @@
-
+html, body{
+  overflow-x: hidden;
+}
 
 #MessageBoard .list-group,
 #Users .list-group{
@@ -7,7 +9,35 @@
 	height:500px;
 }
 
+.clickable{
+  cursor: pointer;
+}
+
+.poke-animation{
+ -webkit-animation-name: shake-background;
+ -webkit-animation-duration: .25s;
+ -webkit-animation-iteration-count: 4;
+ -webkit-animation-direction: alternate;
+ -webkit-animation-timing-function: linear;
+ -webkit-animation-fill-mode: both;
+ -webkit-animation-delay: 0s;
+}
 
 
+@-webkit-keyframes shake-background {
+    0% {
+        transform: translate(0, 0);
+    }
 
+    25% {
+        transform: translate(-10px, 0);
+    }
 
+    75% {
+        transform: translate(10px, 0);
+    }
+
+    100% {
+        transform: translate(0, 0);
+    }
+}

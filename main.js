@@ -31,13 +31,19 @@ io.on('connection', function (socket) {
     }
   });
 
-  socket.on('publishMessage', function(message){
-    message.timestamp = new Date();
+  socket.on('publishMessage', function(text){
+    var message = {
+      text: text,
+      username: user.username,
+      userId: user.id,
+      timestamp: new Date()
+    };
+    
     messages.push(message);
     io.to(groupName).emit('messages', messages);
   });
 
-  socket.on('disconnect', function(message){
+  socket.on('disconnect', function(){
     var indexOfUser = users.indexOf(user);
     if(indexOfUser !== -1) {
       users.splice(indexOfUser, 1);
