@@ -1,7 +1,9 @@
 /** @jsx React.DOM */
 var Header = React.createClass({displayName: 'Header',
   render : function () {
-    //what here?
+    return (
+      React.DOM.h1(null, this.props.title)
+    );
   }
 })
 /** @jsx React.DOM */
@@ -171,6 +173,10 @@ window.onload = function(){
 
   var messages = [];
   var me = {};
+  
+  var title = "React Chat";
+  
+  React.renderComponent(Header({title: title}), document.querySelector('#Header'));
     
   socket.on('welcome', function(user){
     me = user;
