@@ -7,10 +7,14 @@ var UserList = React.createClass({
           Users
         </div>
         <ul className="list-group">
-          many users
+        {this.props.users.map(user =>
+          <li className="list-group-item clickable" key={user.id}>
+            {user.username}
+          </li>
+        )}
         </ul>
         <div className="panel-footer">
-          click here to log out
+          <LogoutButton />
         </div>
       </div>
     );

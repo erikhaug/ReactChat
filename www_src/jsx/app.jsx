@@ -21,6 +21,7 @@ window.onload = function(){
 
   socket.on('users', function(data){
     console.log("users", data);
+    React.renderComponent(<UserList users={data} />, document.querySelector('#UserList'));
   });
 
   socket.on('messages', function(data){

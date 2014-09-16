@@ -161,10 +161,14 @@ var UserList = React.createClass({displayName: 'UserList',
           "Users"
         ), 
         React.DOM.ul({className: "list-group"}, 
-          "many users"
+        this.props.users.map(function(user) 
+          {return React.DOM.li({className: "list-group-item clickable", key: user.id}, 
+            user.username
+          );}
+        )
         ), 
         React.DOM.div({className: "panel-footer"}, 
-          "click here to log out"
+          LogoutButton(null)
         )
       )
     );
@@ -194,6 +198,7 @@ window.onload = function(){
 
   socket.on('users', function(data){
     console.log("users", data);
+    React.renderComponent(UserList({users: data}), document.querySelector('#UserList'));
   });
 
   socket.on('messages', function(data){
