@@ -7,7 +7,7 @@ var MessageBoard = React.createClass({
         </div>
         put message list here
         <div className="panel-footer">
-          put message input here
+          <MessageInput />
         </div>
       </div>
     );

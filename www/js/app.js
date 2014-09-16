@@ -78,7 +78,7 @@ var MessageBoard = React.createClass({displayName: 'MessageBoard',
         ), 
         "put message list here", 
         React.DOM.div({className: "panel-footer"}, 
-          "put message input here"
+          MessageInput(null)
         )
       )
     );
@@ -88,13 +88,14 @@ var MessageBoard = React.createClass({displayName: 'MessageBoard',
 var MessageInput = React.createClass({displayName: 'MessageInput',
   submit : function  (e) {
     e.preventDefault();
-    var username = this.props.username;
-    var message = 'get the message from the input called message';
+    
+    var message = this.refs.message.getDOMNode().value.trim();
     if (!message) {
       return;
     }
-    //publishMessage to server
-    //clear the input element
+    
+    emit('publishMessage', message);
+    this.refs.message.getDOMNode().value = "";
   },
   render : function () {
     return (
@@ -102,7 +103,7 @@ var MessageInput = React.createClass({displayName: 'MessageInput',
         React.DOM.div({className: "input-group"}, 
           React.DOM.input({type: "text", className: "form-control", placeholder: "Your message", ref: "message", autoFocus: true}), 
           React.DOM.span({className: "input-group-btn"}, 
-            React.DOM.button({className: "btn btn-success", type: "submit"}, "Send")
+            React.DOM.button({className: "btn btn-success", onClick: this.submit, type: "submit"}, "Send")
           )
         )
       )
@@ -182,6 +183,8 @@ window.onload = function(){
   socket.on('welcome', function(user){
     me = user;
     console.log("welcome", user);
+    React.unmountComponentAtNode(document.querySelector("#Login"));
+    React.renderComponent(MessageBoard(null), document.querySelector('#MessageBoard'));
   });  
 
   socket.on('users', function(data){
