@@ -1,13 +1,16 @@
 var MessageBoard = React.createClass({
+  
   render : function () {
     return (
       <div className="panel panel-default">
         <div className="panel-heading">
-          Messages
+          <h3>Messages</h3>
         </div>
-        put message list here
+        <div id="MessageList">
+          
+        </div>
         <div className="panel-footer">
-          put message input here
+          <MessageInput onPublishMessage={this.props.onPublishMessage}/>
         </div>
       </div>
     );

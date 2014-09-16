@@ -7,6 +7,27 @@
 	height:500px;
 }
 
+.clickable {
+	cursor: pointer;
+}
+
+h1 {
+	color: orange;
+}
+
+body.poked {
+	-webkit-animation: pokeBodyAnimation .5s ease 0s 5;
+}
+
+@-webkit-keyframes pokeBodyAnimation {
+    0% {
+    	background-color: white;
+	}
+
+	100% {
+	    background-color: orange;
+	}	
+}
 
 
 

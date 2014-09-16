@@ -1,5 +1,7 @@
 var Header = React.createClass({
   render : function () {
-    //what here?
+    return (
+    		<h1>{this.props.title}</h1>
+    	);
   }
 })

@@ -3,10 +3,15 @@ var MessageList = React.createClass({
     var elem = this.getDOMNode();
     elem.scrollTop = elem.scrollHeight;
   },
+  componentDidUpdate: function () {
+    this.scrollToBottom();
+  },
   render : function () {
     return (
       <div className="list-group">
-        render all messages here
+        {this.props.messages.map((message, index) =>
+          <Message message={message}/>
+        )}
       </div>
     );
   }

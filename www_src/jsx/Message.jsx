@@ -3,14 +3,14 @@ var Message = React.createClass({
     return (
       <div className="list-group-item">
         <h4 className="list-group-item-heading">
-          message
+          {this.props.message.text}
         </h4>
         <strong className="list-group-item-text">
-          username
+          {this.props.message.user.username}
         </strong>
         &nbsp;&bull;&nbsp;
         <span className="list-group-item-text text-muted">
-          timestamp
+          <PrettyTime value={this.props.message.timestamp} />
         </span>
       </div>
     );
