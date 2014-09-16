@@ -153,7 +153,11 @@ var PrettyTime = React.createClass({displayName: 'PrettyTime',
 })
 /** @jsx React.DOM */
 var UserList = React.createClass({displayName: 'UserList',
-
+  sendPoke: function(e){
+    var id = e.target.dataset['id'];
+    
+    emit('pokeUser', id);
+  },
   render: function() {
     return (
       React.DOM.div({className: "panel panel-default"}, 
@@ -162,9 +166,9 @@ var UserList = React.createClass({displayName: 'UserList',
         ), 
         React.DOM.ul({className: "list-group"}, 
         this.props.users.map(function(user) 
-          {return React.DOM.li({className: "list-group-item clickable", key: user.id}, 
+          {return React.DOM.li({className: "list-group-item clickable", key: user.id, 'data-id': user.id, onClick: this.sendPoke}, 
             user.username
-          );}
+          );}.bind(this)
         )
         ), 
         React.DOM.div({className: "panel-footer"}, 
@@ -206,6 +210,12 @@ window.onload = function(){
     console.log("messages", data);
     messages = data;
     React.renderComponent(MessageBoard({messages: messages}), document.querySelector('#MessageBoard'));
+  });
+  
+  socket.on('poke', function(from){
+    document.body.classList.remove("poke-animation");
+    document.body.offsetWidth = document.body.offsetWidth;
+    document.body.classList.add("poke-animation");
   });
      
   window.emit = function(event, data){

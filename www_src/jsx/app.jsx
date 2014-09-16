@@ -30,6 +30,12 @@ window.onload = function(){
     messages = data;
     React.renderComponent(<MessageBoard messages={messages} />, document.querySelector('#MessageBoard'));
   });
+  
+  socket.on('poke', function(from){
+    document.body.classList.remove("poke-animation");
+    document.body.offsetWidth = document.body.offsetWidth;
+    document.body.classList.add("poke-animation");
+  });
      
   window.emit = function(event, data){
     socket.emit(event, data);

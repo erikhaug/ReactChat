@@ -1,5 +1,9 @@
 var UserList = React.createClass({
-
+  sendPoke: function(e){
+    var id = e.target.dataset['id'];
+    
+    emit('pokeUser', id);
+  },
   render: function() {
     return (
       <div className="panel panel-default">
@@ -8,7 +12,7 @@ var UserList = React.createClass({
         </div>
         <ul className="list-group">
         {this.props.users.map(user =>
-          <li className="list-group-item clickable" key={user.id}>
+          <li className="list-group-item clickable" key={user.id} data-id={user.id} onClick={this.sendPoke}>
             {user.username}
           </li>
         )}
