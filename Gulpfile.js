@@ -5,7 +5,8 @@ var mario = require('gulp-plumber');
 
 var path = {
   js: [
-    'node_modules/moment/moment.js'
+    'node_modules/moment/moment.js',
+    'node_modules/react/dist/react.js'
   ],
   jsx: 'www_src/jsx/*.jsx',
   html: 'www_src/*.html',
