@@ -6,7 +6,9 @@ var MessageList = React.createClass({
   render : function () {
     return (
       <div className="list-group">
+      
         render all messages here
+        
       </div>
     );
   }

@@ -53,14 +53,20 @@ var Message = React.createClass({displayName: 'Message',
     return (
       React.DOM.div({className: "list-group-item"}, 
         React.DOM.h4({className: "list-group-item-heading"}, 
+        
           "message"
+          
         ), 
         React.DOM.strong({className: "list-group-item-text"}, 
+        
           "username"
+          
         ), 
         " • ", 
         React.DOM.span({className: "list-group-item-text text-muted"}, 
+        
           "timestamp"
+          
         )
       )
     );
@@ -74,9 +80,13 @@ var MessageBoard = React.createClass({displayName: 'MessageBoard',
         React.DOM.div({className: "panel-heading"}, 
           "Messages"
         ), 
+        
         "put message list here", 
+        
         React.DOM.div({className: "panel-footer"}, 
+        
           "put message input here"
+          
         )
       )
     );
@@ -86,7 +96,6 @@ var MessageBoard = React.createClass({displayName: 'MessageBoard',
 var MessageInput = React.createClass({displayName: 'MessageInput',
   submit : function  (e) {
     e.preventDefault();
-    var username = this.props.username;
     var message = 'get the message from the input called message';
     if (!message) {
       return;
@@ -116,7 +125,9 @@ var MessageList = React.createClass({displayName: 'MessageList',
   render : function () {
     return (
       React.DOM.div({className: "list-group"}, 
+      
         "render all messages here"
+        
       )
     );
   }
@@ -153,10 +164,14 @@ var UserList = React.createClass({displayName: 'UserList',
           "Users"
         ), 
         React.DOM.ul({className: "list-group"}, 
+        
           "many users"
+          
         ), 
         React.DOM.div({className: "panel-footer"}, 
+        
           "click here to log out"
+          
         )
       )
     );

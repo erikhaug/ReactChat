@@ -1,7 +1,6 @@
 var MessageInput = React.createClass({
   submit : function  (e) {
     e.preventDefault();
-    var username = this.props.username;
     var message = 'get the message from the input called message';
     if (!message) {
       return;

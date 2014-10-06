@@ -7,10 +7,14 @@ var UserList = React.createClass({
           Users
         </div>
         <ul className="list-group">
+        
           many users
+          
         </ul>
         <div className="panel-footer">
+        
           click here to log out
+          
         </div>
       </div>
     );
